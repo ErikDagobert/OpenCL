@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 
   char *file;
   if (argc == 4) {
-    file = argv[2];
+    file = argv[3];
   } else {
     file = "./init";
   } // Open the files
@@ -58,16 +58,18 @@ int main(int argc, char **argv) {
   // Set values gathered from reading the file in buffer a
   int x, y;
   float value;
-  for (int i = 0; fscanf(fp, "%d %d %f", &x, &y, &value); i++) {
+  for (int i = 0; fscanf(fp, "%d %d %f", &x, &y, &value) != EOF; i++) {
+    printf("Test %d: %f \n", i, value);
     a[INDEX(x, y)] = value;
   }
 
-  // Place holder values to get some performance approxiamation
-  // for (size_t jx = 1; jx < buffer_height - 1; ++jx) {
-  //   for (size_t ix = 1; ix < buffer_width - 1; ++ix) {
-  //     a[jx * buffer_width + ix] = (float)ix * jx;
-  //   }
-  // }
+  // return 1;
+  //  Place holder values to get some performance approxiamation
+  //  for (size_t jx = 1; jx < buffer_height - 1; ++jx) {
+  //    for (size_t ix = 1; ix < buffer_width - 1; ++ix) {
+  //      a[jx * buffer_width + ix] = (float)ix * jx;
+  //    }
+  //  }
 
   // Useful when testing
   // a[buffer_width * 2 + 2] = 1000000.0;
@@ -241,7 +243,7 @@ int main(int argc, char **argv) {
   clSetKernelArg(kernelb, 4, sizeof(int), &buffer_height);
 
   const size_t global_sz[] = {buffer_width - 2, buffer_height - 2};
-  for (int i = 0; i < iterations / 2; i++) {
+  for (int i = 0; i < (iterations + 1) / 2; i++) {
     if (clEnqueueNDRangeKernel(command_queue, kernela, 2, NULL,
                                (const size_t *)&global_sz, NULL, 0, NULL,
                                NULL) != CL_SUCCESS) {
