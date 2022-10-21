@@ -343,12 +343,12 @@ int main(int argc, char **argv) {
     fprintf(stderr, "cannot finish queue\n");
     return 1;
   }
-  /* 
+
   reduction_total = 0;
   for (size_t ix = 0; ix < nmb_redgps; ++ix)
     reduction_total += reduction_result[ix];
   cl_float difference_average = reduction_total / (height * width);
-
+/*
   if (iterations & 1) {
     if (clEnqueueReadBuffer(command_queue, work_buffer_b, CL_TRUE, 0,
                             buffer_width * buffer_height * sizeof(cl_float), a,
