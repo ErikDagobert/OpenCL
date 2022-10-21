@@ -8,6 +8,7 @@
 #define INDEX(X, Y) (Y + 1) * buffer_width + X + 1
 
 int main(int argc, char **argv) {
+  // Input parsing
   int iterations;
   cl_float diffusion_constant;
   if (argv[1][1] == 'n') {
@@ -342,7 +343,7 @@ int main(int argc, char **argv) {
     fprintf(stderr, "cannot finish queue\n");
     return 1;
   }
-
+  /* 
   reduction_total = 0;
   for (size_t ix = 0; ix < nmb_redgps; ++ix)
     reduction_total += reduction_result[ix];
@@ -368,7 +369,7 @@ int main(int argc, char **argv) {
     fprintf(stderr, "cannot finish queue\n");
     return 1;
   }
-  /*
+  
     for (size_t jx = 1; jx < buffer_height; ++jx) {
       for (size_t ix = 1; ix < buffer_width; ++ix) {
         printf(" %5.f ", a[jx * buffer_width + ix]);
