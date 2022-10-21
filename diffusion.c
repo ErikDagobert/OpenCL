@@ -55,12 +55,11 @@ int main(int argc, char **argv) {
   cl_float *a = calloc(buffer_width * buffer_height, sizeof(cl_float));
   cl_float *b = calloc(buffer_width * buffer_height, sizeof(cl_float));
 
-  // TODO
   // Set values gathered from reading the file in buffer a
   int x, y;
   float value;
   for (int i = 0; fscanf(fp, "%d %d %f", &x, &y, &value) != EOF; i++) {
-    printf("Test %d: %f \n", i, value);
+    // printf("Test %d: %f \n", i, value);
     a[INDEX(x, y)] = value;
   }
 
@@ -348,7 +347,8 @@ int main(int argc, char **argv) {
   for (size_t ix = 0; ix < nmb_redgps; ++ix)
     reduction_total += reduction_result[ix];
   cl_float difference_average = reduction_total / (height * width);
-/*
+
+  /* If you're interested in last iteration:
   if (iterations & 1) {
     if (clEnqueueReadBuffer(command_queue, work_buffer_b, CL_TRUE, 0,
                             buffer_width * buffer_height * sizeof(cl_float), a,
@@ -369,7 +369,7 @@ int main(int argc, char **argv) {
     fprintf(stderr, "cannot finish queue\n");
     return 1;
   }
-  
+
     for (size_t jx = 1; jx < buffer_height; ++jx) {
       for (size_t ix = 1; ix < buffer_width; ++ix) {
         printf(" %5.f ", a[jx * buffer_width + ix]);
